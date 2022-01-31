@@ -414,9 +414,6 @@ namespace FileManager
                 directorylist.Add(dirInfo);
                 GetDirectoryInfo(directorylist.Count -1);
             }
-
-
-
         }
 
         /// <summary>
