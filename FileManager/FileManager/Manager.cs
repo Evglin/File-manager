@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace FileManager
 {
     public class CommandExeptions : Exception
     {
-        private ErrorCodes _ErrorCode = ErrorCodes.WrongCommand;
+        public ErrorCodes _ErrorCode = ErrorCodes.WrongCommand;
         public ErrorCodes ErrorCode
         {
             get
@@ -319,7 +320,7 @@ namespace FileManager
             dirInfo.sub = true;
             dirInfo.deployed = true;
             directorylist.Add(dirInfo);
-            GetDirectoryInfo(0);
+           // GetDirectoryInfo(0);    
             GetDirectory(DriveList[DriveIndex].Name);
             CurrentDirectory = 0;
             StartDirectoryNumber = 0;
@@ -412,7 +413,7 @@ namespace FileManager
                     dirInfo.noaccess = true;
                 }
                 directorylist.Add(dirInfo);
-                GetDirectoryInfo(directorylist.Count -1);
+                //GetDirectoryInfo(directorylist.Count -1);
             }
         }
 
@@ -857,6 +858,7 @@ namespace FileManager
                     PrintCommandLine(CommandLine);
                     break;
                 case ConsoleKey.Escape:
+                    quitProgram();
                     Environment.Exit(0);
                     break;
                 default:
@@ -1314,8 +1316,33 @@ namespace FileManager
 
             }
         }
-  
-       
+
+        public void startProgram()
+        {
+            try
+            {
+                string TextFile = File.ReadAllText("start.json");
+                directory dir = JsonConvert.DeserializeObject<directory>(TextFile);
+                findDirectory(dir.info.FullName);
+            }
+            catch
+            {
+                /*
+                CommandExeptions exeption = new CommandExeptions();
+                exeption.ErrorCode = ErrorCodes.WrongPath;
+                throw exeption;
+                */
+            }
+        }
+
+            
+        private void quitProgram()
+        {
+            directory dir = directorylist[CurrentDirectory];
+            string text = JsonConvert.SerializeObject(dir);
+            File.WriteAllText("start.json", text);
+
+        }
 
         public void getCommand(string[] args)
         {
@@ -1339,6 +1366,7 @@ namespace FileManager
                     default:
                         CommandExeptions exeption = new CommandExeptions();
                         exeption.ErrorCode = ErrorCodes.WrongCommand;
+                        throw exeption;
                         break;
                 }
             }

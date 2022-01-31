@@ -22,6 +22,7 @@ namespace FileManager
             Manager fm = new Manager();
             fm.printbox();
             fm.DriveGet();
+            fm.startProgram();
 
             fm.PrintCommandLine("");
             ConsoleKeyInfo keypressed;
