@@ -277,15 +277,13 @@ namespace FileManager
             DrawCommandLine();
             DrawInfobox();
             DrawFileBox();
-
         }
+
        /// <summary>
        /// получает список дисков
        /// </summary>
         public void DriveGet()
         {
-
-
             DriveInfo[] allDrives = DriveInfo.GetDrives();
 
             foreach (DriveInfo drive in allDrives)
