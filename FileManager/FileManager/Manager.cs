@@ -1416,9 +1416,11 @@ namespace FileManager
             }
             catch
             {
+                /*
                 CommandExeptions exeption = new CommandExeptions();
                 exeption.ErrorCode = ErrorCodes.WrongPath;
                 throw new Exception();
+                */
             }
         }
 
@@ -1430,9 +1432,11 @@ namespace FileManager
             }
             catch
             {
+                /*
                 CommandExeptions exeption = new CommandExeptions();
                 exeption.ErrorCode = ErrorCodes.WrongPath;
                 throw new Exception();
+                */
             }
         }
         private void CopyCommand(string[] args)
@@ -1449,12 +1453,91 @@ namespace FileManager
 
         private void MoveCommand(string[] args)
         {
-     
+            if (File.Exists(args[1]))
+            {
+                FileMove(args[1], args[2]);
+            }
+            if (Directory.Exists(args[1]))
+            {
+                DirectoryMove(args[1], args[2]);
+            }
         }
+
+        private void FileMove(string source, string destination)
+        {
+            try
+            {
+                File.Move(source, destination);
+            }
+            catch
+            {
+                /*
+                CommandExeptions exeption = new CommandExeptions();
+                exeption.ErrorCode = ErrorCodes.WrongPath;
+                throw new Exception();
+                */
+            }
+        }
+
+        private void DirectoryMove(string source, string destination)
+        {
+            try
+            {
+                Directory.Move(source, destination);
+            }
+            catch
+            {
+                /*
+                CommandExeptions exeption = new CommandExeptions();
+                exeption.ErrorCode = ErrorCodes.WrongPath;
+                throw new Exception();
+                */
+            }
+        }
+
 
         private void DeleteCommand(string[] args)
         {
+            if (File.Exists(args[1]))
+            {
+                FileDelete(args[1]);
+            }
+            if (Directory.Exists(args[1]))
+            {
+                DirectoryDelete(args[1]);
+            }
+        }
 
+        private void FileDelete(string source)
+        {
+            try
+            {
+                File.Delete(source);
+            }
+            catch
+            {
+                /*
+                CommandExeptions exeption = new CommandExeptions();
+                exeption.ErrorCode = ErrorCodes.WrongPath;
+                throw new Exception();
+                */
+            }
+        }
+
+        private void DirectoryDelete(string source)
+        {
+            try
+            {
+                Directory.Delete(source);
+            }
+            catch
+            {
+                /*
+                CommandExeptions exeption = new CommandExeptions();
+                exeption.ErrorCode = ErrorCodes.WrongPath;
+                throw new Exception();
+                */
+            }
         }
 
     }
